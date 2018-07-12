@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <body>
+
+        <div id="myGroup">
+            <button class="btn dropdown" data-toggle="collapse" data-target="#keys" data-parent="#myGroup"><i class="icon-chevron-right"></i> Keys  <span class="badge badge-info pull-right">X</span></button>
+            <button class="btn dropdown" data-toggle="collapse" data-target="#attrs" data-parent="#myGroup"><i class="icon-chevron-right"></i> Attributes</button>
+            <button class="btn dropdown" data-toggle="collapse" data-target="#edit" data-parent="#myGroup"><i class="icon-chevron-right"></i> Edit Details</button>
+        
+            <div class="accordion-group">
+                <div class="collapse" id="keys">
+                    keys
+                </div>
+        
+                <div class="collapse" id="attrs">
+                    attrs
+                </div>
+        
+                <div class="collapse" id="edit">
+                    edit
+                </div>
+            </div>
+        </div>
+        
+        <script>
+        var $myGroup = $('#myGroup');
+        $myGroup.on('show.bs.collapse','.collapse', function() {
+            $myGroup.find('.collapse.in').collapse('hide');
+        });
+        </script>
+        
+        </body>
+</html>

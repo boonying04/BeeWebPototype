@@ -226,18 +226,17 @@
               <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications" aria-expanded="false" data-animation="scale-up"
                 role="button">
                 <i class="icon wb-bell" aria-hidden="true"></i>
-                <span class="badge badge-pill badge-danger up">5</span>
+                <!-- <span class="badge badge-pill badge-danger up">5</span> -->
               </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
                 <div class="dropdown-menu-header">
                   <h5>NOTIFICATIONS</h5>
-                  <span class="badge badge-round badge-danger">New 5</span>
                 </div>
   
                 <div class="list-group">
                   <div data-role="container">
                     <div data-role="content">
-                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                      <!-- <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
                         <div class="media">
                           <div class="pr-10">
                             <i class="icon fa-warning bg-red-600 white icon-circle" aria-hidden="true"></i>
@@ -247,58 +246,14 @@
                             <time class="media-meta" datetime="2018-06-12T20:50:48+08:00">5 hours ago</time>
                           </div>
                         </div>
-                      </a>
-                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                        <div class="media">
-                          <div class="pr-10">
-                            <i class="icon wb-user bg-green-600 white icon-circle" aria-hidden="true"></i>
-                          </div>
-                          <div class="media-body">
-                            <h6 class="media-heading">Completed the task</h6>
-                            <time class="media-meta" datetime="2018-06-11T18:29:20+08:00">2 days ago</time>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                        <div class="media">
-                          <div class="pr-10">
-                            <i class="icon wb-settings bg-red-600 white icon-circle" aria-hidden="true"></i>
-                          </div>
-                          <div class="media-body">
-                            <h6 class="media-heading">Settings updated</h6>
-                            <time class="media-meta" datetime="2018-06-11T14:05:00+08:00">2 days ago</time>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                        <div class="media">
-                          <div class="pr-10">
-                            <i class="icon wb-calendar bg-blue-600 white icon-circle" aria-hidden="true"></i>
-                          </div>
-                          <div class="media-body">
-                            <h6 class="media-heading">Event started</h6>
-                            <time class="media-meta" datetime="2018-06-10T13:50:18+08:00">3 days ago</time>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                        <div class="media">
-                          <div class="pr-10">
-                            <i class="icon wb-chat bg-orange-600 white icon-circle" aria-hidden="true"></i>
-                          </div>
-                          <div class="media-body">
-                            <h6 class="media-heading">Message received</h6>
-                            <time class="media-meta" datetime="2018-06-10T12:34:48+08:00">3 days ago</time>
-                          </div>
-                        </div>
-                      </a>
+                      </a> -->
                     </div>
                   </div>
                 </div>
                 <div class="dropdown-menu-footer">
-                  <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
+                  <!-- <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
                     <i class="icon wb-settings" aria-hidden="true"></i>
-                  </a>
+                  </a> -->
                   <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
                     All notifications
                   </a>
@@ -364,6 +319,7 @@
           </div>
         </div> -->
       </div>
+
       <div class="row" data-plugin="matchHeight" data-by-row="true">
         
         <!-- BoxList -->
@@ -377,15 +333,20 @@
                   <!-- Filter Button -->
                   <div>
                     <small>Filter : </small>
-                    <button type="button" class="btn btn-sm btn-animate btn-animate-vertical btn-success mx-1 mx-sm-3" style="display:inline;">
+                    <button type="button" onclick="filterStatus('*')" class="btn btn-sm btn-animate btn-animate-vertical btn-default mx-1 mx-sm-3" style="display:inline;">
+                        <span>
+                          <i class="icon fa-asterisk" aria-hidden="true"></i>
+                          ALL</span>
+                      </button>
+                    <button type="button" onclick="filterStatus('HEALTHTY')" class="btn btn-sm btn-animate btn-animate-vertical btn-success mx-1 mx-sm-3" style="display:inline;">
                       <span>
                         <i class="icon ti-face-smile" aria-hidden="true"></i>
-                        75 HEALTHY BOX</span>
+                        3 HEALTHY</span>
                     </button>
-                    <button type="button" class="btn btn-sm btn-animate btn-animate-vertical btn-danger mx-1 mx-sm-3" style="display:inline;">
+                    <button type="button" onclick="filterStatus('ABNORMAL')" class="btn btn-sm btn-animate btn-animate-vertical btn-danger mx-1 mx-sm-3" style="display:inline;">
                       <span>
                         <i class="icon ti-face-sad" aria-hidden="true"></i>
-                        5 COLLAPING BOX BOX</span>
+                        0 ABNORMAL</span>
                     </button>
                   </div>
                   <!-- / Filter Button-->
@@ -393,12 +354,11 @@
                   <form class="mt-25" action="#" role="search">
                     <div class="input-search input-search-dark">
                       <i class="input-search-icon wb-search" aria-hidden="true"></i>
-                      <input type="text" class="form-control" placeholder="Search.." />
+                      <input type="text" id="searchInput" onkeyup="filterFunction()" class="form-control" placeholder="Search.." />
                     </div>
                   </form>
                   <!-- / Search box -->
                 </div>
-    
                 <div class="mt-0 pt-0" style="height:650px" data-plugin="scrollable">
                   <div data-role="container">
                     <div data-role="content">
@@ -411,32 +371,225 @@
                           <div class="col-3 px-1">Humidity</div>
                           <div class="col-3 px-1">Weight</div>
                         </div>
-                        <div class="list-group">
-                          <a class="list-group-item flex-column align-items-start" onclick="getBoxInfo('box1')" href="javascript:void(0)" data-toggle="collapse" data-target="#box1">
+
+                        
+                        <div class="list-group panel-group" id="boxlist">
+
+                          <!-- BOX 01 -->
+                          <a class="list-group-item flex-column align-items-start accordion-toggle" id="listbox1" href="#box1" data-toggle="collapse"  data-parent="#accordion" onclick="moveScoll('listbox1','box1')">
                             <h4 class="list-group-item-heading mt-0 mb-5">
-                              BOX 1
+                              BOX1
                             </h4>
                             <div class="row mb-0 text-center">
                               <div class="col-3 px-3">
-                                <span class="badge badge-success">HEALTHTY</span>
+                                <span class="badge badge-success" id="boxstatus">HEALTHTY</span>
                               </div>
-                              <div class="col-3 px-3">35°
+                              <div class="col-3 px-3">35°C
                                 <span class="font-size-12">C</span>
                               </div>
                               <div class="col-3 px-3">70%</div>
                               <div class="col-3 px-3">14.5 kg</div>
                             </div>
                           </a>
-                          <div class="col-lg-3 hidden-md-up" collapse id="box1">
-                          </div>
+                          <div class="col-lg-3 hidden-md-up collapse"  id="box1">
+                              <div class="card card-shadow">
+                                  <div class="col-xl-12">
+                                      <!-- Tabs Line Top -->
+                                      <div class="mb-10">
+                                      <div class="nav-tabs-horizontal" data-plugin="tabs">
+                                          <ul class="nav nav-tabs nav-tabs-line tabs-line-top" role="tablist">
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link active" data-toggle="tab" href="#tab1box1" aria-controls="tab1" role="tab">Overall</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab2box1" aria-controls="tab2" role="tab">Graph</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab3box1" aria-controls="tab3" role="tab">Picture</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab4box1" aria-controls="tab4" role="tab">Sound</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab5box1" aria-controls="tab5" role="tab" onclick="drawMap1()">Map</a>
+                                          </li>
+                                          </ul>
+                                          <div class="tab-content pt-20">
+                              
+                                          <!-- Tab 1 - Overall -->
+                                          <div class="tab-pane active" id="tab1box1" role="tabpanel">
+                                              <div class="container-fluid">
+                                                  <!-- Updated Photo -->
+                                                  <div class="row ">
+                                                      <div class="col-md-9 offset-md-3">
+                                                        <div class="card">
+                                                          <img class="card-img-top w-full" src="../global/photos/placeholder.png" alt="...">
+                                                          <div class="card-block text-center mx-auto">
+                                                            <h4 class="card-title">
+                                                              Photo :
+                                                              <span id="updatedPhoto">Tueday 26 June, 2018</span>
+                                                            </h4>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                          </div>
+                                          
+                                          <!-- Tab 2 - Graph -->
+                                          <!-- MORE INFORMATION : https://c3js.org/ -->
+                                          <!-- MORE INFORMATION - JSON : https://c3js.org/samples/data_json.html -->
+                                          <div class="tab-pane" id="tab2box1" role="tabpanel">
+                                              <div class="panel">
+                                              <div class="panel-body pt-20">
+                                                  <div class="row row-lg">
+                              
+                                                  <div class="col-lg-6">
+                                                      <!-- C3 Bar Chart -->
+                                                      <div data-role="w-lg-300">
+                                                      <h4 class="title">Bar</h4>
+                                                      <p>Display as Bar Chart. </p>
+                                                      <div id="c3Bar"></div>
+                                                      </div>
+                                                      <!-- / C3 Bar Chart -->
+                                                  </div>
+                              
+                                                  <div class="col-lg-6">
+                                                      <!-- C3 Spline -->
+                                                      <div class="w-lg-300">
+                                                      <h4 class="title">Spline</h4>
+                                                      <p>Display as Spline Chart. </p>
+                                                      <div id="c3Spline"></div>
+                                                      </div>
+                                                      <!-- / C3 Spline Chart -->
+                                                  </div>
+                                                  </div>
+                                              </div>
+                                              </div>
+                                          </div>
+                              
+                                          <!-- Tab 3 - Picture -->
+                                          <div class="tab-pane" id="tab3box1" role="tabpanel">
+                                              <div class="panel">
+                                              <div class="panel-body pt-0">
+                                                  <div class="row">
+                                                  <h4 class="card-title">Photo :
+                                                      <span id="updatedPhoto'.$box.'">Tueday 26 June, 2018</span>
+                                                  </h4>
+                                                  <div class="tab-pane" id="tab3'.$box.'" role="tabpanel">
+                                                      <div class="row">
+                                                        <div class="col-6 col-md-4">
+                                                          <div class="card text-left">
+                                                            <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
+                                                            <span id="">02:00:59 am</span>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                          <div class="card text-left">
+                                                            <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
+                                                            <span id="">12:00:59 am</span>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                          <div class="card text-left">
+                                                            <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
+                                                            <span id="">08:00:59 pm</span>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-12 d-block mx-auto">
+                                                      <button type="button" class="btn btn-animate btn-animate-vertical btn-warning ">
+                                                        <span>
+                                                          <i class="icon wb-download" aria-hidden="true"></i>Download High Resolution Photo
+                                                        </span>
+                                                      </button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                              
+                                          <!-- Tab 4 - Download -->
+                                          <div class="tab-pane" id="tab4box1" role="tabpanel">
+                                            <!-- Panel Table Tools -->
+                                            <div class="panel">
+                                              <div class="panel-body pt-0">
+                                                <table class="table table-hover dataTable table-striped w-full" id="TableToolsbox1">
+                                                  <thead>
+                                                    <tr class="text-center">
+                                                      <th>Box No.</th>
+                                                      <th>Status</th>
+                                                      <th>Temp.</th>
+                                                      <th>Hum.</th>
+                                                      <th>Weight</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                    <tr>
+                                                      <td>Box 1</td>
+                                                      <td class="green-600">Healthy</td>
+                                                      <td>32°
+                                                        <span class="font-size-12">C</span>
+                                                      </td>
+                                                      <td>72%</td>
+                                                      <td>12.4 kg</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Box 2</td>
+                                                      <td class="red-600">Collaping</td>
+                                                      <td>40°
+                                                        <span class="font-size-12">C</span>
+                                                      </td>
+                                                      <td>50%</td>
+                                                      <td>1.45 kg</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Box 3</td>
+                                                      <td class="green-600">Healthy</td>
+                                                      <td>35°
+                                                        <span class="font-size-12">C</span>
+                                                      </td>
+                                                      <td>70%</td>
+                                                      <td>14.5 kg</td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                              </div>
+                                            </div>
+                                            <!-- / Panel Table Tools -->
+                                          </div>
+                                        
+                                          <!-- Tab 5 - Map -->
+                                          <div class="tab-pane" id="tab5box1" role="tabpanel">
+                                              <div class="container-fluid">
+                                              <!-- Google Map -->
+                                              <div class="row ">
+                                                  <div class="col-md-12 offset-md-3" style="margin:0px">
+                                                      <div id="boxMap1" style="width:100%;padding-top: 70%;"></div>
+                                                  </div>
+                                              </div>
+                                              </div>
+                                          </div>
 
-                          <a class="list-group-item flex-column align-items-start" href="javascript:void(0)" onclick="getBoxInfo('box2')" data-toggle="collapse" data-target="#box2">
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <!-- / Tabs Line Top -->
+                                    </div>
+                              </div>
+                          </div>
+                          
+                          <!-- BOX 02 -->
+                          <a class="list-group-item flex-column align-items-start accordion-toggle" id="listbox2" href="#box2" data-toggle="collapse" data-parent="#accordion" onclick="moveScoll('listbox2','box2')">
                             <h4 class="list-group-item-heading mt-0 mb-5">
-                              BOX 2
+                              BOX2
                             </h4>
                             <div class="row mb-0 text-center">
                               <div class="col-3 px-3">
-                                <span class="badge badge-success">HEALTHTY</span>
+                                <span class="badge badge-success" id="boxstatus">HEALTHTY</span>
                               </div>
                               <div class="col-3 px-3">32°
                                 <span class="font-size-12">C</span>
@@ -445,16 +598,205 @@
                               <div class="col-3 px-3">12.4 kg</div>
                             </div>
                           </a>
-                          <div class="col-lg-3 hidden-md-up collapse" id="box2">
-                          </div>
+                          <div class="col-lg-3 hidden-md-up collapse"  id="box2">
+                              <div class="card card-shadow">
+                                  <div class="col-xl-12">
+                                      <!-- Tabs Line Top -->
+                                      <div class="mb-10">
+                                      <div class="nav-tabs-horizontal" data-plugin="tabs">
+                                          <ul class="nav nav-tabs nav-tabs-line tabs-line-top" role="tablist">
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link active" data-toggle="tab" href="#tab1box2" aria-controls="tab1" role="tab">Overall</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab2box2" aria-controls="tab2" role="tab">Graph</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab3box2" aria-controls="tab3" role="tab">Picture</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab4box2" aria-controls="tab4" role="tab">Sound</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab5box2" aria-controls="tab5" role="tab"  onclick="drawMap2()">Map</a>
+                                          </li>
+                                          </ul>
+                                          <div class="tab-content pt-20">
+                              
+                                          <!-- Tab 1 - Overall -->
+                                          <div class="tab-pane active" id="tab1box2" role="tabpanel">
+                                            <!-- Updated Photo -->
+                                            <div class="row ">
+                                                <div class="col-md-9 offset-md-3">
+                                                  <div class="card">
+                                                    <img class="card-img-top w-full" src="../global/photos/placeholder.png" alt="...">
+                                                    <div class="card-block text-center mx-auto">
+                                                      <h4 class="card-title">
+                                                        Photo :
+                                                        <span id="updatedPhoto">Tueday 26 June, 2018</span>
+                                                      </h4>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                          </div>
+                                          
+                                          <!-- Tab 2 - Graph -->
+                                          <!-- MORE INFORMATION : https://c3js.org/ -->
+                                          <!-- MORE INFORMATION - JSON : https://c3js.org/samples/data_json.html -->
+                                          <div class="tab-pane" id="tab2box2" role="tabpanel">
+                                              <div class="panel">
+                                              <div class="panel-body pt-20">
+                                                  <div class="row row-lg">
+                              
+                                                  <div class="col-lg-6">
+                                                      <!-- C3 Bar Chart -->
+                                                      <div data-role="w-lg-300">
+                                                      <h4 class="title">Bar</h4>
+                                                      <p>Display as Bar Chart. </p>
+                                                      <div id="c3Bar"></div>
+                                                      </div>
+                                                      <!-- / C3 Bar Chart -->
+                                                  </div>
+                              
+                                                  <div class="col-lg-6">
+                                                      <!-- C3 Spline -->
+                                                      <div class="w-lg-300">
+                                                      <h4 class="title">Spline</h4>
+                                                      <p>Display as Spline Chart. </p>
+                                                      <div id="c3Spline"></div>
+                                                      </div>
+                                                      <!-- / C3 Spline Chart -->
+                                                  </div>
+                                                  </div>
+                                              </div>
+                                              </div>
+                                          </div>
+                              
+                                          <!-- Tab 3 - Picture -->
+                                          <div class="tab-pane" id="tab3box2" role="tabpanel">
+                                              <div class="panel">
+                                              <div class="panel-body pt-0">
+                                                  <div class="row">
+                                                  <h4 class="card-title">Photo :
+                                                      <span id="updatedPhoto">Tueday 26 June, 2018</span>
+                                                  </h4>
+                                                  <div class="tab-pane" id="tab3box2" role="tabpanel">
+                                                      <div class="row">
+                                                        <div class="col-6 col-md-4">
+                                                          <div class="card text-left">
+                                                            <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
+                                                            <span id="">02:00:59 am</span>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                          <div class="card text-left">
+                                                            <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
+                                                            <span id="">12:00:59 am</span>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                          <div class="card text-left">
+                                                            <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
+                                                            <span id="">08:00:59 pm</span>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-12 d-block mx-auto">
+                                                      <button type="button" class="btn btn-animate btn-animate-vertical btn-warning ">
+                                                        <span>
+                                                          <i class="icon wb-download" aria-hidden="true"></i>Download High Resolution Photo
+                                                        </span>
+                                                      </button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
 
-                          <a class="list-group-item flex-column align-items-start" href="javascript:void(0)" onclick="getBoxInfo('box3')" data-toggle="collapse" data-target="#box3">
+                                            <!-- Tab 4 - Sound -->
+                                            <div class="tab-pane" id="tab4box2" role="tabpanel">
+                                              <!-- Panel Table Tools -->
+                                              <div class="panel">
+                                                <div class="panel-body pt-0">
+                                                  <table class="table table-hover dataTable table-striped w-full" id="TableToolsbox1">
+                                                    <thead>
+                                                      <tr class="text-center">
+                                                        <th>Box No.</th>
+                                                        <th>Status</th>
+                                                        <th>Temp.</th>
+                                                        <th>Hum.</th>
+                                                        <th>Weight</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      <tr>
+                                                        <td>Box 1</td>
+                                                        <td class="green-600">Healthy</td>
+                                                        <td>32°
+                                                          <span class="font-size-12">C</span>
+                                                        </td>
+                                                        <td>72%</td>
+                                                        <td>12.4 kg</td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td>Box 2</td>
+                                                        <td class="red-600">Collaping</td>
+                                                        <td>40°
+                                                          <span class="font-size-12">C</span>
+                                                        </td>
+                                                        <td>50%</td>
+                                                        <td>1.45 kg</td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td>Box 3</td>
+                                                        <td class="green-600">Healthy</td>
+                                                        <td>35°
+                                                          <span class="font-size-12">C</span>
+                                                        </td>
+                                                        <td>70%</td>
+                                                        <td>14.5 kg</td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                </div>
+                                              </div>
+                                              <!-- / Panel Table Tools -->
+                                            </div>
+
+                                            <!-- Tab 5 - Map -->
+                                            <div class="tab-pane" id="tab5box2" role="tabpanel">
+                                                <div class="container-fluid">
+                                                <!-- Google Map -->
+                                                <div class="row ">
+                                                    <div class="col-md-12 offset-md-3" style="margin:0px">
+                                                        <div id="boxMap2" style="width:100%;padding-top: 70%;"></div>
+                                                      </div>
+                                                </div>
+                                
+                                                </div>
+                                            </div>
+
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <!-- / Tabs Line Top -->
+                                    </div>
+                                  </div>
+                          </div>
+                          
+
+                          <!-- BOX 03 -->
+                          <a class="list-group-item flex-column align-items-start accordion-toggle" id="listbox3" href="#box3"  data-toggle="collapse" data-parent="#accordion" onclick="moveScoll('listbox3','box3')">
                             <h4 class="list-group-item-heading mt-0 mb-5">
-                              BOX 3
+                              BOX3
                             </h4>
                             <div class="row mb-0 text-center">
                               <div class="col-3 px-3">
-                                <span class="badge badge-danger">COLLAPING</span>
+                                <span class="badge badge-danger" id="boxstatus">ABNORMAL</span>
                               </div>
                               <div class="col-3 px-3">40°
                                 <span class="font-size-12">C</span>
@@ -463,9 +805,192 @@
                               <div class="col-3 px-3">1.45 kg</div>
                             </div>
                           </a>
-                          <div class="col-lg-3 hidden-md-up collapse" id="box3">
+                          <div class="col-lg-3 hidden-md-up collapse"  id="box3">
+                              <div class="card card-shadow">
+                                  <div class="col-xl-12">
+                                      <!-- Tabs Line Top -->
+                                      <div class="mb-10">
+                                      <div class="nav-tabs-horizontal" data-plugin="tabs">
+                                          <ul class="nav nav-tabs nav-tabs-line tabs-line-top" role="tablist">
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link active" data-toggle="tab" href="#tab1box3" aria-controls="tab1" role="tab">Overall</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab2box3" aria-controls="tab2" role="tab">Graph</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab3box3" aria-controls="tab3" role="tab">Picture</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab4box3" aria-controls="tab4" role="tab">Sound</a>
+                                          </li>
+                                          <li class="nav-item" role="presentation">
+                                              <a class="nav-link" data-toggle="tab" href="#tab5box3" aria-controls="tab5" role="tab" onclick="drawMap3()">Map</a>
+                                          </li>
+                                          </ul>
+                                          <div class="tab-content pt-20">
+                              
+                                          <!-- Tab 1 - Overall -->
+                                          <div class="tab-pane active" id="tab1box3" role="tabpanel">
+                                              <div class="container-fluid">
+                                                <!-- Updated Photo -->
+                                                <div class="row ">
+                                                    <div class="col-md-9 offset-md-3">
+                                                      <div class="card">
+                                                        <img class="card-img-top w-full" src="../global/photos/placeholder.png" alt="...">
+                                                        <div class="card-block text-center mx-auto">
+                                                          <h4 class="card-title">
+                                                            Photo :
+                                                            <span id="updatedPhoto">Tueday 26 June, 2018</span>
+                                                          </h4>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                          </div>
+                                          
+                                          <!-- Tab 2 - Graph -->
+                                          <!-- MORE INFORMATION : https://c3js.org/ -->
+                                          <!-- MORE INFORMATION - JSON : https://c3js.org/samples/data_json.html -->
+                                          <div class="tab-pane" id="tab2box3" role="tabpanel">
+                                              <div class="panel">
+                                              <div class="panel-body pt-20">
+                                                  <div class="row row-lg">
+                              
+                                                  <div class="col-lg-6">
+                                                      <!-- C3 Bar Chart -->
+                                                      <div data-role="w-lg-300">
+                                                      <h4 class="title">Bar</h4>
+                                                      <p>Display as Bar Chart. </p>
+                                                      <div id="c3Bar"></div>
+                                                      </div>
+                                                      <!-- / C3 Bar Chart -->
+                                                  </div>
+                              
+                                                  <div class="col-lg-6">
+                                                      <!-- C3 Spline -->
+                                                      <div class="w-lg-300">
+                                                      <h4 class="title">Spline</h4>
+                                                      <p>Display as Spline Chart. </p>
+                                                      <div id="c3Spline"></div>
+                                                      </div>
+                                                      <!-- / C3 Spline Chart -->
+                                                  </div>
+                                                  </div>
+                                              </div>
+                                              </div>
+                                          </div>
+                              
+                                          <!-- Tab 3 - Picture -->
+                                          <div class="tab-pane" id="tab3box3" role="tabpanel">
+                                              <div class="panel">
+                                              <div class="panel-body pt-0">
+                                                  <div class="row">
+                                                  <h4 class="card-title">Photo :
+                                                      <span id="updatedPhoto">Tueday 26 June, 2018</span>
+                                                  </h4>
+                                                  <div class="tab-pane" id="tab3box3" role="tabpanel">
+                                                      <div class="row">
+                                                        <div class="col-6 col-md-4">
+                                                          <div class="card text-left">
+                                                            <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
+                                                            <span id="">02:00:59 am</span>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                          <div class="card text-left">
+                                                            <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
+                                                            <span id="">12:00:59 am</span>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-4">
+                                                          <div class="card text-left">
+                                                            <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
+                                                            <span id="">08:00:59 pm</span>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-12 d-block mx-auto">
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                              
+                                            <!-- Tab 4 - Sound -->
+                                            <div class="tab-pane" id="tab4box3" role="tabpanel">
+                                              <!-- Panel Table Tools -->
+                                              <div class="panel">
+                                                <div class="panel-body pt-0">
+                                                  <table class="table table-hover dataTable table-striped w-full" id="TableToolsbox1">
+                                                    <thead>
+                                                      <tr class="text-center">
+                                                        <th>Box No.</th>
+                                                        <th>Status</th>
+                                                        <th>Temp.</th>
+                                                        <th>Hum.</th>
+                                                        <th>Weight</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      <tr>
+                                                        <td>Box 1</td>
+                                                        <td class="green-600">Healthy</td>
+                                                        <td>32°
+                                                          <span class="font-size-12">C</span>
+                                                        </td>
+                                                        <td>72%</td>
+                                                        <td>12.4 kg</td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td>Box 2</td>
+                                                        <td class="red-600">Collaping</td>
+                                                        <td>40°
+                                                          <span class="font-size-12">C</span>
+                                                        </td>
+                                                        <td>50%</td>
+                                                        <td>1.45 kg</td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td>Box 3</td>
+                                                        <td class="green-600">Healthy</td>
+                                                        <td>35°
+                                                          <span class="font-size-12">C</span>
+                                                        </td>
+                                                        <td>70%</td>
+                                                        <td>14.5 kg</td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                </div>
+                                              </div>
+                                              <!-- / Panel Table Tools -->
+                                            </div>
+                                            
+                                            <!-- Tab 5 - Map -->
+                                            <div class="tab-pane" id="tab5box3" role="tabpanel">
+                                                <div class="container-fluid">
+                                                <!-- Google Map -->
+                                                <div class="row ">
+                                                    <div class="col-md-12 offset-md-3" style="margin:0px">
+                                                        <div id="boxMap3" style="width:100%;padding-top: 70%;"></div>
+                                                      </div>
+                                                </div>
+                                
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <!-- / Tabs Line Top -->
+                                    </div>
+                                  </div>
                           </div>
-
+                          
                         </div>
                       </div>
                       <!-- / List -->
@@ -477,10 +1002,9 @@
         </div>
 
         <!-- BoxInfo -->
-        <div class="col-xxl-6 col-lg-8 hidden-xs-down" id="boxinfo"></div>
-        </div>
-        
+        <div class="col-xxl-6 col-lg-8 hidden-xs-down" id="mainInfo"></div>
 
+        </div>
       </div>
     </div>
   </div>
@@ -620,96 +1144,214 @@
   </script>
 
   <script>
-    function getBoxInfo( id) {
-      $.get( "php/boxInfo.php" , {box: id},function(result) {
-        var w = window.innerWidth;
-        if(w < 900){
-          $("#"+id).html(result);
-        }else {
-          $("#"+"boxinfo").html(result);//document.getElementById(id).src = result;
-        }
-        } )
-      initMap(id);                   
-    }
+    function drawMap1() {
+      // phone check
+      if( navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i)
+      ){      
 
+      var map = new google.maps.Map(document.getElementById('boxMap1'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 6
+      });
+  
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude};
+              var beepos = {
+                lat: 13.650801,
+                lng: 100.492399};
+    
+              var bounds  = new google.maps.LatLngBounds();
+    
+              var me = new google.maps.Marker({position:pos, icon:'manmap24.png'});
+              me.setMap(map);
+              var loc = new google.maps.LatLng(me.position.lat(), me.position.lng());
+              bounds.extend(loc);
+    
+              var bee = new google.maps.Marker({position:beepos, icon:'beemap32.png'});
+              bee.setMap(map);
+              var loc2 = new google.maps.LatLng(bee.position.lat(), bee.position.lng());
+              bounds.extend(loc2);
+    
+              map.fitBounds(bounds);      //auto zoom
+              map.panToBounds(bounds);    //auto center
+            });
+          }
+      }
+    }
   </script>
   <script>
-    var infoWindow;
-    function initMap(id) {
-      var map = new google.maps.Map(document.getElementById("googleMap"+id), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 15
-      });
-      infoWindow = new google.maps.InfoWindow;
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude};
-          var beepos = {
-            lat: 13.650801,
-            lng: 100.492399};
-
-          var bounds  = new google.maps.LatLngBounds();
-
-          var me = new google.maps.Marker({position:pos,icon: "manmap24.png"});
-          me.setMap(map);
-          var loc = new google.maps.LatLng(me.position.lat(), me.position.lng());
-          bounds.extend(loc);
-
-          var bee = new google.maps.Marker({position:beepos,icon: "beemap32.png"});
-          bee.setMap(map);
-          var loc2 = new google.maps.LatLng(bee.position.lat(), bee.position.lng());
-          bounds.extend(loc2);
-
-          map.fitBounds(bounds);      //auto zoom
-          map.panToBounds(bounds);    //auto center
+    function drawMap2() {
+  
+      if( navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i)
+      ){
+        var map = new google.maps.Map(document.getElementById('boxMap2'), {
+            center: {lat: -34.397, lng: 150.644},
+            zoom: 6
         });
-      } 
+    
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude};
+                var beepos = {
+                  lat: 13.650801,
+                  lng: 104.492399};
+      
+                var bounds  = new google.maps.LatLngBounds();
+      
+                var me = new google.maps.Marker({position:pos, icon:'manmap24.png'});
+                me.setMap(map);
+                var loc = new google.maps.LatLng(me.position.lat(), me.position.lng());
+                bounds.extend(loc);
+      
+                var bee = new google.maps.Marker({position:beepos, icon:'beemap32.png'});
+                bee.setMap(map);
+                var loc2 = new google.maps.LatLng(bee.position.lat(), bee.position.lng());
+                bounds.extend(loc2);
+      
+                map.fitBounds(bounds);      //auto zoom
+                map.panToBounds(bounds);    //auto center
+              });
+            }
+      }
     }
   </script>
-      
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCekjXwUzMXbmDOqzsdwo68dgBWPb4TTWI"></script>
+  <script>
+    function drawMap3() {
   
-  <!-- <script>
-      var map, infoWindow;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('googleMap'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 15
+      if( navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i)
+      ){
+
+        var map = new google.maps.Map(document.getElementById('boxMap3'), {
+            center: {lat: -34.397, lng: 150.644},
+            zoom: 6
         });
-        infoWindow = new google.maps.InfoWindow;
-  
+    
+        // Try HTML5 geolocation.
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude};
-            var beepos = {
-              lat: 13.650801,
-              lng: 100.492399};
-  
-            var bounds  = new google.maps.LatLngBounds();
-  
-            var me = new google.maps.Marker({position:pos,icon: 'manmap24.png'});
-            me.setMap(map);
-            var loc = new google.maps.LatLng(me.position.lat(), me.position.lng());
-            bounds.extend(loc);
-  
-            var bee = new google.maps.Marker({position:beepos,icon: 'beemap32.png'});
-            bee.setMap(map);
-            var loc2 = new google.maps.LatLng(bee.position.lat(), bee.position.lng());
-            bounds.extend(loc2);
-  
-            map.fitBounds(bounds);      //auto zoom
-            map.panToBounds(bounds);    //auto center
-          });
-        } 
+              navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude};
+                var beepos = {
+                  lat: 13.650801,
+                  lng: 104.492399};
+      
+                var bounds  = new google.maps.LatLngBounds();
+      
+                var me = new google.maps.Marker({position:pos, icon:'manmap24.png'});
+                me.setMap(map);
+                var loc = new google.maps.LatLng(me.position.lat(), me.position.lng());
+                bounds.extend(loc);
+      
+                var bee = new google.maps.Marker({position:beepos, icon:'beemap32.png'});
+                bee.setMap(map);
+                var loc2 = new google.maps.LatLng(bee.position.lat(), bee.position.lng());
+                bounds.extend(loc2);
+      
+                map.fitBounds(bounds);      //auto zoom
+                map.panToBounds(bounds);    //auto center
+              });
+            }
+      }
+    }
+  </script>
+  <script>
+    function moveScoll(id, box){
+      if( navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i)
+      ){
+        var elmnt = document.getElementById(id);
+              elmnt.scrollIntoView();
+      }else{
+        getMainInfo(box);
+      }
+    }
+  </script>
+
+  <script>
+    function getMainInfo(boxid) {
+      $.get( "php/boxInfo.php" , {box:boxid},function(result) {
+          $("#"+"mainInfo").html( result);
+      } )                    
+
+    }  
+    
+    if(!( navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i))
+    ){
+        getMainInfo('box1');
       }
   </script>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCekjXwUzMXbmDOqzsdwo68dgBWPb4TTWI&callback=initMap"></script> -->
+  <script>
+    function filterFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("boxlist");
+        li = ul.getElementsByTagName("a");
+        for (i = 0; i < li.length; i++) {
+            a = li[i];
+            if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+    function filterStatus(input) {
+        var  filter, ul, li, a, i;
+        filter = input.toUpperCase();
+        ul = document.getElementById("boxlist");
+        li = ul.getElementsByTagName("a");
+        for (i = 0; i < li.length; i++) {
+            a = li[i];
+            if (a.innerHTML.toUpperCase().indexOf(filter) > -1 || input=='*') {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+  </script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCekjXwUzMXbmDOqzsdwo68dgBWPb4TTWI&"></script>
+
 </body>
 
 </html>
