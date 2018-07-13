@@ -1,12 +1,39 @@
 <?php
     $box = $_GET["box"];
 
+    $serverName = "beeconnexsql.database.windows.net";
+    $connectionOptions = array(
+        "Database" => "beeconnex_db",
+        "Uid" => "oat",
+        "PWD" => "#Orating0315"
+    );
+    //Establishes the connection
+    $conn = sqlsrv_connect($serverName, $connectionOptions);
+    if( $conn === false ) {
+        echo("cannot connect" . PHP_EOL);
+    }
+    #-----------------------------------------------------#
+
+    $sql= "SELECT TOP 1 * FROM dbo.beeconnex_tbl WHERE BoxID = 'Chiangmai101' ORDER BY time_stamp DESC ";
+
+    $time= sqlsrv_query($conn, $sql);
+    sqlsrv_fetch($time);
+    $box_timeupdate = sqlsrv_get_field($time, 2, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR));
+    // echo $boonbox_time;
+    // echo "<br>";
+
+    $info= sqlsrv_query($conn, $sql);
+    $box_info = sqlsrv_fetch_array($info);
+    // echo $boonbox_info['BoxID'] . "   "  . $boonbox_info['temp'] . "   " . $boonbox_info['humi'] . "   " . $boonbox_info['weig'] . "   " . $boonbox_info['sound'] . "   " . $boonbox_info['pic'] . "   " . $boonbox_info['latitude'] . "   " . $boonbox_info['longtitude'] . "   " . $boonbox_info['status'];
+    // echo "<br>";
+
+    #----------------------------------------------------#
     echo '
     <!-- Panel Information -->
     <div class="card card-shadow" id="">
       <div class="card-block p-30">
         <h3 class="card-title">
-        '.strtoupper($box).'
+        '.strtoupper($box_info['BoxID'] ).'
           <div class="card-header-actions">
             <span class="badge badge-success badge-round"> Healthy </span>
           </div>
@@ -34,7 +61,6 @@
             </li>
             </ul>
             <div class="tab-content pt-20">
-
               <!-- Tab 1 - Overall -->
               <div class="tab-pane active" id="tab1" role="tabpanel">
                 <div class="container-fluid">
@@ -99,7 +125,6 @@
                                   70 %
                                 </div>
                               </div>
-
                             </div>
                           </div>
                         </div>
@@ -118,7 +143,6 @@
                                 <div class="counter-number red-600 font-size-30 mt-5">
                                   <i class="icon fa-cubes font-size-24 mb-5 ml-3"></i>
                                   36 kg
-
                                 </div>
                               </div>
                             </div>
@@ -127,7 +151,6 @@
                       </div>
                     </div>
                   </div>
-
                   <!-- Updated Photo -->
                     <div class="row">
                         <div class="col-md-9 offset-md-3" style="margin:0px">
@@ -144,7 +167,6 @@
                       </div>
                 </div>
               </div>
-
               <!-- Tab 2 - Graph -->
               <!-- MORE INFORMATION : https://c3js.org/ -->
               <!-- MORE INFORMATION - JSON : https://c3js.org/samples/data_json.html -->
@@ -152,7 +174,6 @@
                 <div class="panel">
                   <div class="panel-body pt-20">
                     <div class="row row-lg">
-
                       <div class="col-lg-6">
                         <!-- C3 Bar Chart -->
                         <div data-role="w-lg-300">
@@ -162,7 +183,6 @@
                         </div>
                         <!-- / C3 Bar Chart -->
                       </div>
-
                       <div class="col-lg-6">
                         <!-- C3 Spline -->
                         <div class="w-lg-300">
@@ -176,7 +196,6 @@
                   </div>
                 </div>
               </div>
-
               <!-- Tab 3 - Picture -->
               <div class="tab-pane" id="tab3" role="tabpanel">
                 <div class="panel">
@@ -220,7 +239,6 @@
                   </div>
                 </div>
               </div>
-
               <!-- Tab 4 - Download -->
               <div class="tab-pane" id="tab4" role="tabpanel">
                 <!-- Panel Table Tools -->
@@ -324,7 +342,6 @@
                 </div>
                 <!-- / Panel Table Tools -->
               </div>
-
               <!-- Tab 5 - Map -->
               <div class="tab-pane" id="tab5" role="tabpanel">
                   <div class="container-fluid">
@@ -383,5 +400,4 @@
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCekjXwUzMXbmDOqzsdwo68dgBWPb4TTWI&"></script>
     ';
-
 ?>
