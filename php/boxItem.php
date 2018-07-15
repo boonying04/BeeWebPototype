@@ -1,6 +1,7 @@
 <?php
     $box = $_GET["box"];
-
+    $month = ['dummy','January','February','March','April','May','June','July','August','September','October','November','December'];
+    $class = ['ABNORMAL','NORMAL'];
 
     $serverName = "beeconnexsql.database.windows.net";
     $connectionOptions = array(
@@ -13,37 +14,58 @@
     if( $conn === false ) {
         echo("cannot connect" . PHP_EOL);
     }
-    #-----------------------------------------------------#
+    #---------------------- SELECT TOP 3-------------------------#
+    
+    $sql= "SELECT TOP 3 * FROM dbo.beeconnex_tbl WHERE BoxID = '".$box."' ORDER BY time_stamp DESC ";
 
-    $sql= "SELECT TOP 1 * FROM dbo.beeconnex_tbl WHERE BoxID = 'Chiangmai101' ORDER BY time_stamp DESC ";
-
-    $time= sqlsrv_query($conn, $sql);
-    sqlsrv_fetch($time);
-    $box_timeupdate = sqlsrv_get_field($time, 2, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR));
-    // echo $boonbox_time;
-    // echo "<br>";
-
-    $info= sqlsrv_query($conn, $sql);
-    $box_info = sqlsrv_fetch_array($info);
-    // echo $boonbox_info['BoxID'] . "   "  . $boonbox_info['temp'] . "   " . $boonbox_info['humi'] . "   " . $boonbox_info['weig'] . "   " . $boonbox_info['sound'] . "   " . $boonbox_info['pic'] . "   " . $boonbox_info['latitude'] . "   " . $boonbox_info['longtitude'] . "   " . $boonbox_info['status'];
-    // echo "<br>";
-
-    #----------------------------------------------------#
-
-
+    $stmp= sqlsrv_query($conn, $sql);
+    $count = 0;
+    while ($row = sqlsrv_fetch_array($stmp)){
+        $temp[$count] = $row['temp'];
+        $humi[$count] = $row['humi'];
+        $weig[$count] = $row['weig'];
+        $pic[$count] = $row['pic'];
+        $status[$count] = $class[$row['status']];
+        $count++;
+    }
+  #----------------------------Time update--------------------------------------#
+    
+    $stmp= sqlsrv_query($conn, $sql);
+    $count = 0;
+    while ($count < 3){
+      sqlsrv_fetch($stmp);
+      $timeupdate[$count] = sqlsrv_get_field($stmp,2, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR));
+      $count++;
+    }
+  #----------------------------- DAY MONTH YEAR ----------------------------------------#
+  $count = 0;
+  while ($count < 3){
+    $get_time = new Datetime($timeupdate[$count]);
+    $result = $get_time->format('Y-m-d-H:i-s');
+    $result = explode('-',$result);
+    //$year[$count] = $result[0];
+    $nummonth[$count] = (int)$result[1];
+    $day[$count] = $result[2];
+    $hour_min[$count] = $result[3];
+    $count++;
+    //echo $month[$nummonth];
+  }
+  //strtoupper($box)
+  #---------------------------------------------------------------------#
+    
     echo '<a class="list-group-item flex-column align-items-start accordion-toggle" id="list'.$box.'" href="#'.$box.'"  data-toggle="collapse" data-parent="#accordion" onclick="moveScoll'.$box.'()">
     <h4 class="list-group-item-heading mt-0 mb-5">
-    '.strtoupper($box_info["BoxID"]).'
+    '.strtoupper($box).'
     </h4>
     <div class="row mb-0 text-center">
       <div class="col-3 px-3">
-        <span class="badge badge-danger" id="boxstatus">ABNORMAL</span>
+        <span class="badge badge-danger" id="boxstatus">'.$status[0].'</span>
       </div>
-      <div class="col-3 px-3">'.$box_info["temp"].'°
+      <div class="col-3 px-3">'.$temp[0].'°
         <span class="font-size-12">C</span>
       </div>
-      <div class="col-3 px-3">50%</div>
-      <div class="col-3 px-3">1.45 kg</div>
+      <div class="col-3 px-3">'.$humi[0].'%</div>
+      <div class="col-3 px-3">'.$weig[0].' kg</div>
     </div>
   </a>
   <div class="col-lg-3 hidden-md-up collapse"  id="'.$box.'">
@@ -74,15 +96,23 @@
                   <!-- Tab 1 - Overall -->
                   <div class="tab-pane active" id="tab1'.$box.'" role="tabpanel">
                       <div class="container-fluid">
+
+                      <div class="row">
+                        <div class="col-md-6 offset-md-4">
+                        <audio controls>
+                          <source src="http://translate.google.com/translate_tts?tl=en&q=Hello%2C+World" type="audio/mpeg">
+                        </audio>
+                        </div>
+                      </div>
                         <!-- Updated Photo -->
                         <div class="row ">
-                            <div class="col-md-9 offset-md-3">
+                            <div class="col-md-9 offset-md-2">
                               <div class="card">
-                                <img class="card-img-top w-full" src="./global/photos/placeholder.png" alt="...">
+                                <img class="card-img-top w-full" src="'.$pic[0].'" alt="...">
                                 <div class="card-block text-center mx-auto">
                                   <h4 class="card-title">
                                     Photo :
-                                    <span id="updatedPhoto">Tueday 26 June, 2018</span>
+                                    <span id="updatedPhoto">'.$day[0].' '.$month[$nummonth[0]].' , '.$hour_min[0].'</span>
                                   </h4>
                                 </div>
                               </div>
@@ -92,63 +122,53 @@
                   </div>
                   
                   <!-- Tab 2 - Graph -->
-                  <!-- MORE INFORMATION : https://c3js.org/ -->
-                  <!-- MORE INFORMATION - JSON : https://c3js.org/samples/data_json.html -->
-                  <div class="tab-pane" id="tab2'.$box.'" role="tabpanel">
-                      <div class="panel">
-                      <div class="panel-body pt-20">
-                          <div class="row row-lg">
-      
-                          <div class="col-lg-6">
-                              <!-- C3 Bar Chart -->
-                              <div data-role="w-lg-300">
-                              <h4 class="title">Bar</h4>
-                              <p>Display as Bar Chart. </p>
-                              <div id="c3Bar"></div>
-                              </div>
-                              <!-- / C3 Bar Chart -->
-                          </div>
-      
-                          <div class="col-lg-6">
-                              <!-- C3 Spline -->
-                              <div class="w-lg-300">
-                              <h4 class="title">Spline</h4>
-                              <p>Display as Spline Chart. </p>
-                              <div id="c3Spline"></div>
-                              </div>
-                              <!-- / C3 Spline Chart -->
-                          </div>
-                          </div>
+                  <<div class="tab-pane" id="tab2'.$box.'" role="tabpanel">
+                  <div class="panel">
+                    <div class="panel-body pt-20">
+                      <div class="row row-lg">
+                        <div class="col-lg-9 offset-md-2" style="padding:0px">
+                          <!-- C3 Bar Chart -->
+                            <h4 class="title">Temperature & Humidity</h4>
+                            <canvas id="TempHumiChart'.$box.'" style="width:60%,padding-top: 70%;"></canvas>
+                          <!-- / C3 Bar Chart -->
+                        </div>
                       </div>
+                      <div class="row row-lg">
+                        <div class="col-lg-9 offset-md-2" style="padding:0px">
+                          <!-- C3 Spline -->
+                            <h4 class="title">Weight</h4>
+                            <canvas id="WeightChart'.$box.'" style="width:60%;"></canvas>
+                          <!-- / C3 Spline Chart -->
+                        </div>
                       </div>
+                    </div>
                   </div>
+                </div>
       
                   <!-- Tab 3 - Picture -->
                   <div class="tab-pane" id="tab3'.$box.'" role="tabpanel">
                       <div class="panel">
                       <div class="panel-body pt-0">
                           <div class="row">
-                          <h4 class="card-title">Photo :
-                              <span id="updatedPhoto">Tueday 26 June, 2018</span>
-                          </h4>
+                          <h4 class="card-title">Photo</h4>
                           <div class="tab-pane" id="tab3'.$box.'" role="tabpanel">
                               <div class="row">
                                 <div class="col-6 col-md-4">
                                   <div class="card text-left">
-                                    <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
-                                    <span id="">02:00:59 am</span>
+                                    <img class="img-fluid w-full" src="'.$pic[0].'" alt="...">
+                                    <span id="">'.$day[0].' '.$month[$nummonth[0]].' , '.$hour_min[0].'</span>
                                   </div>
                                 </div>
                                 <div class="col-6 col-md-4">
                                   <div class="card text-left">
-                                    <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
-                                    <span id="">12:00:59 am</span>
+                                    <img class="img-fluid w-full" src="'.$pic[1].'" alt="...">
+                                    <span id="">'.$day[1].' '.$month[$nummonth[1]].' , '.$hour_min[1].'</span>
                                   </div>
                                 </div>
                                 <div class="col-6 col-md-4">
                                   <div class="card text-left">
-                                    <img class="img-fluid w-full" src="./global/photos/placeholder.png" alt="...">
-                                    <span id="">08:00:59 pm</span>
+                                    <img class="img-fluid w-full" src="'.$pic[2].'" alt="...">
+                                    <span id="">'.$day[2].' '.$month[$nummonth[2]].' , '.$hour_min[2].'</span>
                                   </div>
                                 </div>
                               </div>
@@ -160,57 +180,35 @@
                           </div>
                         </div>
                       </div>
-                    </div>
+                  </div>
       
                     <!-- Tab 4 - Sound -->
                     <div class="tab-pane" id="tab4'.$box.'" role="tabpanel">
-                      <!-- Panel Table Tools -->
-                      <div class="panel">
-                        <div class="panel-body pt-0">
-                          <table class="table table-hover dataTable table-striped w-full" id="TableToolsbox1">
-                            <thead>
-                              <tr class="text-center">
-                                <th>Box No.</th>
-                                <th>Status</th>
-                                <th>Temp.</th>
-                                <th>Hum.</th>
-                                <th>Weight</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>Box 1</td>
-                                <td class="green-600">Healthy</td>
-                                <td>32°
-                                  <span class="font-size-12">C</span>
-                                </td>
-                                <td>72%</td>
-                                <td>12.4 kg</td>
-                              </tr>
-                              <tr>
-                                <td>Box 2</td>
-                                <td class="red-600">Collaping</td>
-                                <td>40°
-                                  <span class="font-size-12">C</span>
-                                </td>
-                                <td>50%</td>
-                                <td>1.45 kg</td>
-                              </tr>
-                              <tr>
-                                <td>Box 3</td>
-                                <td class="green-600">Healthy</td>
-                                <td>35°
-                                  <span class="font-size-12">C</span>
-                                </td>
-                                <td>70%</td>
-                                <td>14.5 kg</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                    <!-- Panel Table Tools -->
+                    <div class="panel">
+                      <div class="panel-body pt-0" style="padding:0px;">
+                        <table class="table table-hover dataTable table-striped w-full" id="TableTools" style="width:100%">
+                          <tbody>
+    
+                            <tr>
+                              <td>
+                                <audio controls align="left" style="width:100px;">
+                                  <source src="http://translate.google.com/translate_tts?tl=en&q=Hello%2C+World" type="audio/mpeg">
+                                </audio>
+                              </td>
+                              <td align="right" style="vertical-align:middle;">
+                                <span>12:30</span>
+                                <span>15JUL</span>
+                                <span class="badge badge-success badge-round"> <font size="1">Healthy</font></span>
+                              </td>
+                            </tr>
+                            
+                          </tbody>
+                        </table>
                       </div>
-                      <!-- / Panel Table Tools -->
                     </div>
+                    <!-- / Panel Table Tools -->
+                  </div>
                     
                     <!-- Tab 5 - Map -->
                     <div class="tab-pane" id="tab5'.$box.'" role="tabpanel">
@@ -283,7 +281,123 @@
             });
           }
     }
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCekjXwUzMXbmDOqzsdwo68dgBWPb4TTWI&"></script>';
+</script>
+
+<script>
+    var ctx = document.getElementById("TempHumiChart'.$box.'").getContext("2d");
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: "line",
+    
+        // The data for our dataset
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "Temperature",
+                backgroundColor: "rgb(205, 75, 5, .3)",
+                borderColor: "rgb(205, 75, 5)",
+                data: [0, 10, 5, 2, 20, 30, 45],
+            },{
+                label: "Humidity",
+                backgroundColor: "rgb(120, 130, 255, .3)",
+                borderColor: "rgb(120, 130, 255)",
+                data: [45, 30, 20, 2, 5, 10, 0],
+            }]
+        },
+    
+        // Configuration options go here
+        options:{
+          legend: {
+              labels: {
+                  // fontColor: "#c4c4c4",
+                  fontSize: 13
+              }
+          },
+          scales: {
+              yAxes : [{
+                  ticks : {
+                      // fontColor: "#b7b7b7",
+                      fontSize: 11,
+                      stepSize: 20,
+                      max : 100,    
+                      min : 0,
+                  },
+                  gridLines: {
+                      display: true ,
+                      // color: "#303030"
+                      }
+              }],
+              xAxes: [{
+                  ticks: {
+                      // fontColor: "#b7b7b7",
+                      fontSize: 12
+                  },
+                  gridLines: {
+                      display: true ,
+                      // color: "#303030"
+                  }
+              }]
+          }
+      }
+    });
+</script>
+
+<script>
+    var ctx2 = document.getElementById("WeightChart'.$box.'").getContext("2d");
+    var chart2 = new Chart(ctx2, {
+        // The type of chart we want to create
+        type: "line",
+    
+        // The data for our dataset
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "Weight",
+                backgroundColor: "rgb(250, 180, 0, .3)",
+                borderColor: "rgb(250, 180, 0)",
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+        },
+    
+        // Configuration options go here
+        options:{
+          legend: {
+              labels: {
+                  // fontColor: "#c4c4c4",
+                  fontSize: 13
+              }
+          },
+          scales: {
+              yAxes : [{
+                  ticks : {
+                      // fontColor: "#b7b7b7",
+                      fontSize: 11,
+                      stepSize: 10,
+                      max : 40,    
+                      min : 0,
+                  },
+                  gridLines: {
+                      display: true ,
+                      // color: "#303030"
+                      }
+              }],
+              xAxes: [{
+                  ticks: {
+                      // fontColor: "#b7b7b7",
+                      fontSize: 12
+                  },
+                  gridLines: {
+                      display: true ,
+                      // color: "#303030"
+                  }
+              }]
+          }
+      }
+    });
+</script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCekjXwUzMXbmDOqzsdwo68dgBWPb4TTWI&"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  ';
 
 ?>

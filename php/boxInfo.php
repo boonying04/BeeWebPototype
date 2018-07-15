@@ -1,39 +1,12 @@
 <?php
     $box = $_GET["box"];
 
-    $serverName = "beeconnexsql.database.windows.net";
-    $connectionOptions = array(
-        "Database" => "beeconnex_db",
-        "Uid" => "oat",
-        "PWD" => "#Orating0315"
-    );
-    //Establishes the connection
-    $conn = sqlsrv_connect($serverName, $connectionOptions);
-    if( $conn === false ) {
-        echo("cannot connect" . PHP_EOL);
-    }
-    #-----------------------------------------------------#
-
-    $sql= "SELECT TOP 1 * FROM dbo.beeconnex_tbl WHERE BoxID = 'Chiangmai101' ORDER BY time_stamp DESC ";
-
-    $time= sqlsrv_query($conn, $sql);
-    sqlsrv_fetch($time);
-    $box_timeupdate = sqlsrv_get_field($time, 2, SQLSRV_PHPTYPE_STRING(SQLSRV_ENC_CHAR));
-    // echo $boonbox_time;
-    // echo "<br>";
-
-    $info= sqlsrv_query($conn, $sql);
-    $box_info = sqlsrv_fetch_array($info);
-    // echo $boonbox_info['BoxID'] . "   "  . $boonbox_info['temp'] . "   " . $boonbox_info['humi'] . "   " . $boonbox_info['weig'] . "   " . $boonbox_info['sound'] . "   " . $boonbox_info['pic'] . "   " . $boonbox_info['latitude'] . "   " . $boonbox_info['longtitude'] . "   " . $boonbox_info['status'];
-    // echo "<br>";
-
-    #----------------------------------------------------#
     echo '
     <!-- Panel Information -->
     <div class="card card-shadow" id="">
       <div class="card-block p-30">
         <h3 class="card-title">
-        '.strtoupper($box_info['BoxID'] ).'
+        '.strtoupper($box).'
           <div class="card-header-actions">
             <span class="badge badge-success badge-round"> Healthy </span>
           </div>
@@ -151,9 +124,17 @@
                       </div>
                     </div>
                   </div>
+
+                  <div class="row">
+                    <div class="col-md-6 offset-md-4">
+                    <audio controls>
+                      <source src="http://translate.google.com/translate_tts?tl=en&q=Hello%2C+World" type="audio/mpeg">
+                    </audio>
+                    </div>
+                  </div>
                   <!-- Updated Photo -->
                     <div class="row">
-                        <div class="col-md-9 offset-md-3" style="margin:0px">
+                        <div class="col-md-9 offset-md-2">
                           <div class="card">
                             <img class="card-img-top w-full" src="../global/photos/placeholder.png" alt="...">
                             <div class="card-block text-center mx-auto">
@@ -168,28 +149,22 @@
                 </div>
               </div>
               <!-- Tab 2 - Graph -->
-              <!-- MORE INFORMATION : https://c3js.org/ -->
-              <!-- MORE INFORMATION - JSON : https://c3js.org/samples/data_json.html -->
               <div class="tab-pane" id="tab2" role="tabpanel">
                 <div class="panel">
                   <div class="panel-body pt-20">
                     <div class="row row-lg">
-                      <div class="col-lg-6">
+                      <div class="col-lg-9 offset-md-2">
                         <!-- C3 Bar Chart -->
-                        <div data-role="w-lg-300">
-                          <h4 class="title">Bar</h4>
-                          <p>Display as Bar Chart. </p>
-                          <div id="c3Bar"></div>
-                        </div>
+                          <h4 class="title">Temperature & Humidity</h4>
+                          <canvas id="TempHumiChart" style="width:60%,padding-top: 56.25%;"></canvas>
                         <!-- / C3 Bar Chart -->
                       </div>
-                      <div class="col-lg-6">
+                    </div>
+                    <div class="row row-lg">
+                      <div class="col-lg-9 offset-md-2">
                         <!-- C3 Spline -->
-                        <div class="w-lg-300">
-                          <h4 class="title">Spline</h4>
-                          <p>Display as Spline Chart. </p>
-                          <div id="c3Spline"></div>
-                        </div>
+                          <h4 class="title">Weight</h4>
+                          <canvas id="WeightChart" style="width:60%,padding-top: 56.25%;"></canvas>
                         <!-- / C3 Spline Chart -->
                       </div>
                     </div>
@@ -227,19 +202,10 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-12 d-block mx-auto">
-                        <button type="button" class="btn btn-animate btn-animate-vertical btn-warning ">
-                          <span>
-                            <i class="icon wb-download" aria-hidden="true"></i>Download High Resolution Photo
-                          </span>
-                        </button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
-              <!-- Tab 4 - Download -->
+              <!-- Tab 4 - Sound -->
               <div class="tab-pane" id="tab4" role="tabpanel">
                 <!-- Panel Table Tools -->
                 <div class="panel">
@@ -247,95 +213,27 @@
                     <table class="table table-hover dataTable table-striped w-full" id="TableTools">
                       <thead>
                         <tr class="text-center">
-                          <th>Box No.</th>
+                          <th>Time</th>
+                          <th>Sound.</th>
                           <th>Status</th>
-                          <th>Temp.</th>
-                          <th>Hum.</th>
-                          <th>Weight</th>
                         </tr>
                       </thead>
                       <tbody>
+
                         <tr>
-                          <td>Box 1</td>
-                          <td class="green-600">Healthy</td>
-                          <td>32°
-                            <span class="font-size-12">C</span>
+                          <td align="center">
+                            12:30
                           </td>
-                          <td>72%</td>
-                          <td>12.4 kg</td>
-                        </tr>
-                        <tr>
-                          <td>Box 2</td>
-                          <td class="red-600">Collaping</td>
-                          <td>40°
-                            <span class="font-size-12">C</span>
+                          <td align="center">
+                            <span class="badge badge-success badge-round"> <font size="3">Healthy</font></span>
                           </td>
-                          <td>50%</td>
-                          <td>1.45 kg</td>
-                        </tr>
-                        <tr>
-                          <td>Box 3</td>
-                          <td class="green-600">Healthy</td>
-                          <td>35°
-                            <span class="font-size-12">C</span>
+                          <td align="center">
+                            <audio controls>
+                              <source src="http://translate.google.com/translate_tts?tl=en&q=Hello%2C+World" type="audio/mpeg">
+                            </audio>
                           </td>
-                          <td>70%</td>
-                          <td>14.5 kg</td>
                         </tr>
-                        <tr>
-                          <td>Box 4</td>
-                          <td class="green-600">Healthy</td>
-                          <td>32°
-                            <span class="font-size-12">C</span>
-                          </td>
-                          <td>72%</td>
-                          <td>12.4 kg</td>
-                        </tr>
-                        <tr>
-                          <td>Box 5</td>
-                          <td class="green-600">Healthy</td>
-                          <td>32°
-                            <span class="font-size-12">C</span>
-                          </td>
-                          <td>72%</td>
-                          <td>12.4 kg</td>
-                        </tr>
-                        <tr>
-                          <td>Box 6</td>
-                          <td class="green-600">Healthy</td>
-                          <td>32°
-                            <span class="font-size-12">C</span>
-                          </td>
-                          <td>72%</td>
-                          <td>12.4 kg</td>
-                        </tr>
-                        <tr>
-                          <td>Box 7</td>
-                          <td class="green-600">Healthy</td>
-                          <td>32°
-                            <span class="font-size-12">C</span>
-                          </td>
-                          <td>72%</td>
-                          <td>12.4 kg</td>
-                        </tr>
-                        <tr>
-                          <td>Box 8</td>
-                          <td class="green-600">Healthy</td>
-                          <td>32°
-                            <span class="font-size-12">C</span>
-                          </td>
-                          <td>72%</td>
-                          <td>12.4 kg</td>
-                        </tr>
-                        <tr>
-                          <td>Box 9</td>
-                          <td class="green-600">Healthy</td>
-                          <td>32°
-                            <span class="font-size-12">C</span>
-                          </td>
-                          <td>72%</td>
-                          <td>12.4 kg</td>
-                        </tr>
+                        
                       </tbody>
                     </table>
                   </div>
@@ -362,7 +260,7 @@
     </div>
     <!-- / Panel Infornmation -->
     
-    <script>
+  <script>
     function drawMap() {
           
       var map = new google.maps.Map(document.getElementById("mainMap"), {
@@ -398,6 +296,121 @@
           }
     }
   </script>
+
+  <script>
+    var ctx = document.getElementById("TempHumiChart").getContext("2d");
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: "line",
+    
+        // The data for our dataset
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "Temperature",
+                backgroundColor: "rgb(205, 75, 5, .3)",
+                borderColor: "rgb(205, 75, 5)",
+                data: [0, 10, 5, 2, 20, 30, 45],
+            },{
+                label: "Humidity",
+                backgroundColor: "rgb(120, 130, 255, .3)",
+                borderColor: "rgb(120, 130, 255)",
+                data: [45, 30, 20, 2, 5, 10, 0],
+            }]
+        },
+    
+        // Configuration options go here
+        options:{
+          legend: {
+              labels: {
+                  // fontColor: "#c4c4c4",
+                  fontSize: 13
+              }
+          },
+          scales: {
+              yAxes : [{
+                  ticks : {
+                      // fontColor: "#b7b7b7",
+                      fontSize: 11,
+                      stepSize: 20,
+                      max : 100,    
+                      min : 0,
+                  },
+                  gridLines: {
+                      display: true ,
+                      // color: "#303030"
+                      }
+              }],
+              xAxes: [{
+                  ticks: {
+                      // fontColor: "#b7b7b7",
+                      fontSize: 12
+                  },
+                  gridLines: {
+                      display: true ,
+                      // color: "#303030"
+                  }
+              }]
+          }
+      }
+    });
+  </script>
+
+  <script>
+    var ctx2 = document.getElementById("WeightChart").getContext("2d");
+    var chart2 = new Chart(ctx2, {
+        // The type of chart we want to create
+        type: "line",
+    
+        // The data for our dataset
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "Weight",
+                backgroundColor: "rgb(250, 180, 0, .3)",
+                borderColor: "rgb(250, 180, 0)",
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+        },
+    
+        // Configuration options go here
+        options:{
+          legend: {
+              labels: {
+                  // fontColor: "#c4c4c4",
+                  fontSize: 13
+              }
+          },
+          scales: {
+              yAxes : [{
+                  ticks : {
+                      // fontColor: "#b7b7b7",
+                      fontSize: 11,
+                      stepSize: 10,
+                      max : 40,    
+                      min : 0,
+                  },
+                  gridLines: {
+                      display: true ,
+                      // color: "#303030"
+                      }
+              }],
+              xAxes: [{
+                  ticks: {
+                      // fontColor: "#b7b7b7",
+                      fontSize: 12
+                  },
+                  gridLines: {
+                      display: true ,
+                      // color: "#303030"
+                  }
+              }]
+          }
+      }
+    });
+  </script>
+
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCekjXwUzMXbmDOqzsdwo68dgBWPb4TTWI&"></script>
-    ';
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+  ';
 ?>

@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/2527e5a5-6825-476d-bf0a-fb473cc63a8a/resourceGroups/Beeconnex_Resource/providers/Microsoft.Web/sites/sql2web",
+    "appService.deploySubpath": ""
+}
